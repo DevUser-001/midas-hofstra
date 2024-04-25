@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="_csrf" content="{{csrfToken}}">
+        {{>head}}
+    </head>
+
+    <body class="loading auth-fluid-pages pb-0">
+
+        <div class="auth-fluid">
+            <!--Auth fluid left content -->
+            <div class="auth-fluid-form-box">
+                <div class="align-items-center d-flex h-100">
+                    <div class="card-body">
+
+                        <!-- Logo -->
+                        <div class="auth-brand text-center text-lg-left">
+                            <div class="auth-logo">
+                                <a href="/api/v1/" class="logo logo-dark text-center">
+                                    <span class="logo-lg">
+                                        <h2>iPOS</h2>
+                                    </span>
+                                </a>
+
+                                <a href="/api/v1/" class="logo logo-light text-center">
+                                    <span class="logo-lg">
+                                        <h2>iPOS</h2>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- title-->
+                        <h4 class="mt-0">Inloggen</h4>
+                        <p class="text-muted mb-4">Voer uw email en wachtwoord in om toegang te krijgen tot je account.</p>
+
+                        <!-- form -->
+                        <form action="/api/v1/login" method="POST">
+                            <div class="form-group">
+                                <label for="emailaddress">E-mailadres</label>
+                                <input class="form-control" type="email" id="email" name="email" autocomplete="username" required="" placeholder="Voew ur email in">
+                            </div>
+                            <div class="form-group">
+                                <a href="#" class="text-muted float-right"><small>Wachtwoord vergeten?</small></a>
+                                <label for="password">Wachtwoord</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="password" class="form-control" name="password" autocomplete="current-password" placeholder="Uw wachtwoord">
+                                    <div class="input-group-append" data-password="false">
+                                        <div class="input-group-text">
+                                            <span class="password-eye font-12"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="checkbox-signin">
+                                    <label class="custom-control-label" for="checkbox-signin">Onthoud mij</label>
+                                </div>
+                            </div>
+                            <div class="form-group mb-1 text-center">
+                                <button class="btn btn-primary btn-block" type="submit" id="btnLogin">Log In</button>
+                            </div>
+                            <div class="form-group mb-1 text-center">
+                                <a class="btn btn-primary btn-block" href="/api/v1//register" type="submit" id="btnSignUp">Registreer</a>
+                            </div>
+
+                        </form>
+                        <!-- end form-->
+
+                        <!-- Footer-->
+                        <footer class="footer footer-alt">
+                            <p class="text-muted">Nog geen account? <a href="#" class="text-muted ml-1"><b>Neem contact op met de beheerder</b></a></p>
+                        </footer>
+
+                    </div> <!-- end .card-body -->
+                </div> <!-- end .align-items-center.d-flex.h-100-->
+            </div>
+            <!-- end auth-fluid-form-box-->
+
+            <!-- Auth fluid right content -->
+            <div class="auth-fluid-right text-center">
+                <div class="auth-user-testimonial">
+                    <h2 class="mb-3 text-white">I love the color!</h2>
+                    <p class="lead"><i class="mdi mdi-format-quote-open"></i> Temporary text. <i class="mdi mdi-format-quote-close"></i>
+                    </p>
+                    <h5 class="text-white">
+                        admin
+                    </h5>
+                </div> <!-- end auth-user-testimonial-->
+            </div>
+            <!-- end Auth fluid right content -->
+        </div>
+        <!-- end auth-fluid-->
+
+        <!-- Vendor js -->
+        <script src="/js/vendor.min.js"></script>
+
+        <!-- App js -->
+        <script src="/js/app.min.js"></script>
+
+
+            <!-- bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+    </body>
+</html>
