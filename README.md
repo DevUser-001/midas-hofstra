@@ -1,1 +1,3 @@
-# midas-hofstra
+# Order System
+
+Describe how to get it running locally
