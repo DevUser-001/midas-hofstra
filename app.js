@@ -19,7 +19,7 @@ var mysql = require('mysql2');
 const PORT = process.env.PORT || 9999;
 
 // var connection = mysql.createConnection({
-//   host: '62.72.50.1',
+//   host: '62.72.50.23',
 //   user: 'u619697559_midas_devuser',
 //   password: 'Devuser123#',
 //   database: 'u619697559_midas_hofsra'
