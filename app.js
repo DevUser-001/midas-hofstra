@@ -15,7 +15,7 @@ const passport = require("passport");
 require('./config/passport')(passport); 
 var index = require("./routes/index");
 var mysql = require('mysql2');
-// const PORT = 9999;
+// const PORT = 9999; 
 const PORT = process.env.PORT || 9999;
 
 var connection = mysql.createConnection({
@@ -39,7 +39,7 @@ connection.connect((err) => {
   }
   console.log('Connected to MySQL database');
 });
-
+console.log
 // var mongoose = require('mongoose');
 
 // //Lokale connectie op server A.
