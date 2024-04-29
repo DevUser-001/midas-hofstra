@@ -29,6 +29,7 @@ router.post('/login', (req,res,next)=>{
   
 
 router.post('/register', (req,res)=>{
+    console.log("Check Point for registration")
     const {name, email, password, password2, agreedToTos} = req.body;
     let errors = [];
     console.log(' Name ' + name + ' email :' + email + ' pass:' + password + ' AgreedToTos:' + agreedToTos);
