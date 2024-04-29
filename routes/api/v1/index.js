@@ -29,10 +29,8 @@ router.post('/login', (req,res,next)=>{
   
 
   router.post('/register', async (req, res) => {
-    console.log("Check Point for registration");
     const { name, email, password, password2, agreedToTos } = req.body;
     let errors = [];
-    console.log('Name: ' + name + ' Email: ' + email + ' Password: ' + password + ' AgreedToTos: ' + agreedToTos);
   
     // Validation checks
     if (!name || !email || !password || !password2) {
@@ -59,15 +57,11 @@ router.post('/login', (req,res,next)=>{
           errors.push({ msg: 'Email is already registered...', param: "email" });
           res.json({ errors });
         } else {
-          // Hash the password
-          const salt = await bcrypt.genSalt(10);
-          const hashedPassword = await bcrypt.hash(password, salt);
-  
           // Create new user
           const newUser = await User.create({
             name,
             email,
-            password: hashedPassword,
+            password,
             agreedToTos,
             accountAuthorizedByAdmin: false
           });
