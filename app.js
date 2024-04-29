@@ -15,31 +15,49 @@ const passport = require("passport");
 require('./config/passport')(passport); 
 var index = require("./routes/index");
 var mysql = require('mysql2');
+const { Sequelize, DataTypes } = require('sequelize');
 // const PORT = 9999; 
 const PORT = process.env.PORT || 9999;
 
-var connection = mysql.createConnection({
+
+const sequelize = new Sequelize('u619697559_midas_hofsra', 'u619697559_midas_devuser', 'Devuser123#', {
   host: '62.72.50.23',
-  user: 'u619697559_midas_devuser',
-  password: 'Devuser123#',
-  database: 'u619697559_midas_hofsra'
+  dialect: 'mysql'
 });
+
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+  
 
 // var connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '',
-//   database: 'voorraad'
+//   host: '62.72.50.23',
+//   user: 'u619697559_midas_devuser',
+//   password: 'Devuser123#',
+//   database: 'u619697559_midas_hofsra'
 // });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to MySQL database:', err);
-    return;
-  }
-  console.log('Connected to MySQL database');
-});
-console.log
+// // var connection = mysql.createConnection({
+// //   host: 'localhost',
+// //   user: 'root',
+// //   password: '',
+// //   database: 'voorraad'
+// // });
+
+// connection.connect((err) => {
+//   if (err) {
+//     console.error('Error connecting to MySQL database:', err);
+//     return;
+//   }
+//   console.log('Connected to MySQL database');
+// });
+
+
+
 // var mongoose = require('mongoose');
 
 // //Lokale connectie op server A.
@@ -142,5 +160,16 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+
+const db = {};
+db.sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.user = require('./models/user')(sequelize, DataTypes);
+
+db.sequelize.sync()
+.then(()=>{
+  console.log("Model re-sync")
+})
 
 module.exports = app;
