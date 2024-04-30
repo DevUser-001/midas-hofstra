@@ -1,7 +1,5 @@
 const Product = require("../models/product");
-var db = require("../models");
-const User = db.User;
-// const User = require("../models/user");
+const User = require('../models/user');
 
 exports.create = (req, res) => {
     if (!req.body.title) {
@@ -177,11 +175,11 @@ exports.register = async (req, res) => {
     } else {
       try {
         // Check if user with the same email exists
-        const existingUser = await User.find({ where: { email } });
-        if (existingUser) {
-          errors.push({ msg: 'Email is already registered...', param: "email" });
-          res.json({ errors });
-        } else {
+        // const existingUser = await User.findOne({ where: { email } });
+        // if (existingUser) {
+        //   errors.push({ msg: 'Email is already registered...', param: "email" });
+        //   res.json({ errors });
+        // } else {
           // Create new user
           const newUser = await User.create({
             name,
@@ -194,7 +192,8 @@ exports.register = async (req, res) => {
           console.log(newUser);
           res.json({ returnUrl: '/api/v1/dashboard/index' });
         }
-      } catch (error) {
+      // } 
+      catch (error) {
         console.error(error);
         res.status(500).json({ msg: 'Internal server error' });
       }
