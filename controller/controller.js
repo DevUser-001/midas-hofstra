@@ -177,7 +177,7 @@ exports.register = async (req, res) => {
     } else {
       try {
         // Check if user with the same email exists
-        const existingUser = await User.findOne({ where: { email } });
+        const existingUser = await User.find({ where: { email } });
         if (existingUser) {
           errors.push({ msg: 'Email is already registered...', param: "email" });
           res.json({ errors });
