@@ -1,5 +1,7 @@
 const Product = require("../models/product");
-const User = require("../models/user");
+var db = require("../models");
+const User = db.User;
+// const User = require("../models/user");
 
 exports.create = (req, res) => {
     if (!req.body.title) {
