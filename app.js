@@ -32,6 +32,17 @@ sequelize.authenticate()
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
+
+//   const db = {};
+// db.sequelize = Sequelize;
+// db.sequelize = sequelize;
+// db.user = require('./models/user')(sequelize, DataTypes);
+const User = require('./models/user')(sequelize, DataTypes);
+
+db.sequelize.sync()
+.then(()=>{
+  console.log("Model re-sync")
+})
   
 
 // var connection = mysql.createConnection({
@@ -161,15 +172,6 @@ app.use(function(err, req, res, next) {
   res.render("error");
 });
 
-const db = {};
-db.sequelize = Sequelize;
-db.sequelize = sequelize;
 
-db.user = require('./models/user')(sequelize, DataTypes);
-
-db.sequelize.sync()
-.then(()=>{
-  console.log("Model re-sync")
-})
-
-module.exports = app;
+// module.exports = app;
+module.exports = { app, sequelize, User};
