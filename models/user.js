@@ -13,26 +13,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    role: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
+    // role: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true
+    // },
     agreedToTos: {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },
-    agreedToTosDate: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    accountCreationDate: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    accountAuthorizedByAdmin: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
-    }
+    // agreedToTosDate: {
+    //   type: DataTypes.DATE,
+    //   defaultValue: DataTypes.NOW
+    // },
+    // accountCreationDate: {
+    //   type: DataTypes.DATE,
+    //   defaultValue: DataTypes.NOW
+    // },
+    // accountAuthorizedByAdmin: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: false
+    // }
   }, {
     tableName: 'users',
     timestamps: false
