@@ -1,6 +1,4 @@
 const Product = require("../models/product");
-const User = require("../models/user");
-
 
 exports.create = (req, res) => {
     if (!req.body.title) {
@@ -152,54 +150,3 @@ exports.findAllPublished = (req, res) => {
       });
   };
 
-  module.exports = {
-    register
-  }
-
-  async function register(param) {
-    const { name, email, password, password2, agreedToTos } = req.body;
-      let errors = [];
-    
-      // Validation checks
-      if (!name || !email || !password || !password2) {
-        errors.push({ msg: "Please fill in all fields...", param: "email" });
-      }
-      if (password !== password2) {
-        errors.push({ msg: "Passwords do not match...", param: "password2" });
-      }
-      if (password.length < 6) {
-        errors.push({ msg: 'Password must be at least 6 characters long...', param: "password" });
-      }
-      if (agreedToTos !== "on") {
-        errors.push({ msg: "You must agree to the terms and conditions...", param: "agreedToTos" });
-      }
-      if (errors.length > 0) {
-            console.log(errors);
-            res.json({ errors });
-      } else {
-      }
-      try {
-        const existingUser = await User.findOne({ where: { email } });
-        if (existingUser) {
-          errors.push({ msg: 'Email is already registered...', param: "email" });
-          res.json({ errors });
-        } else {
-          // Create new user
-          const newUser = await User.create({
-            name,
-            email,
-            password,
-            agreedToTos,
-            accountAuthorizedByAdmin: false
-          });
-  
-          console.log(newUser);
-          res.json({ returnUrl: '/api/v1/dashboard/index' });
-        }
-        return newUser;
-      
-      } catch (err) {
-        console.log("Error", err);
-        return false;
-      }
-  }
