@@ -1,41 +1,30 @@
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    // role: {
-    //   type: DataTypes.STRING,
-    //   allowNull: true
-    // },
-    agreedToTos: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
-    },
-    // agreedToTosDate: {
-    //   type: DataTypes.DATE,
-    //   defaultValue: DataTypes.NOW
-    // },
-    // accountCreationDate: {
-    //   type: DataTypes.DATE,
-    //   defaultValue: DataTypes.NOW
-    // },
-    // accountAuthorizedByAdmin: {
-    //   type: DataTypes.BOOLEAN,
-    //   defaultValue: false
-    // }
-  }, {
-    tableName: 'users',
-    timestamps: false
-  });
-  return User;
+const mysql = require('mysql2/promise');
+
+const createUserTableQuery = `
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  agreedToTos BOOLEAN DEFAULT false
+)`;
+
+async function createUsersTable(connection) {
+  try {
+    // Execute the SQL query to create the table if it does not exist
+    const [rows, fields] = await connection.query(createUserTableQuery);
+    
+    if (rows.warningStatus === 0) {
+      console.log('Users table created successfully');
+    } else {
+      console.log('Users table already exists');
+    }
+  } catch (error) {
+    console.error('Error creating users table:', error);
+    throw error;
+  }
 }
+
+module.exports = {
+  createUsersTable
+};

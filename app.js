@@ -20,30 +20,30 @@ const { Sequelize, DataTypes } = require('sequelize');
 const PORT = process.env.PORT || 9999;
 
 
-const sequelize = new Sequelize('u619697559_midas_hofsra', 'u619697559_midas_devuser', 'Devuser123#', {
-  host: '62.72.50.23',
-  dialect: 'mysql'
-});
+// const sequelize = new Sequelize('u619697559_midas_hofsra', 'u619697559_midas_devuser', 'Devuser123#', {
+//   host: '62.72.50.23',
+//   dialect: 'mysql'
+// });
 
-sequelize.authenticate()
-  .then(() => {
-    console.log('Database connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// sequelize.authenticate()
+//   .then(() => {
+//     console.log('Database connection has been established successfully.');
+//   })
+//   .catch(err => {
+//     console.error('Unable to connect to the database:', err);
+//   });
 
-//   const db = {};
+// const db = {};
 // db.sequelize = Sequelize;
 // db.sequelize = sequelize;
 // db.user = require('./models/user')(sequelize, DataTypes);
-const User = require('./models/user')(sequelize, DataTypes);
 
-db.sequelize.sync()
-.then(()=>{
-  console.log("Model re-sync")
-})
-  
+// db.sequelize.sync()
+// .then(()=>{
+//   console.log("Model re-sync");
+// })
+
+/******************************************************************************** */
 
 // var connection = mysql.createConnection({
 //   host: '62.72.50.23',
@@ -51,13 +51,6 @@ db.sequelize.sync()
 //   password: 'Devuser123#',
 //   database: 'u619697559_midas_hofsra'
 // });
-
-// // var connection = mysql.createConnection({
-// //   host: 'localhost',
-// //   user: 'root',
-// //   password: '',
-// //   database: 'voorraad'
-// // });
 
 // connection.connect((err) => {
 //   if (err) {
@@ -67,44 +60,8 @@ db.sequelize.sync()
 //   console.log('Connected to MySQL database');
 // });
 
+/*********************************************************************************** */
 
-
-// var mongoose = require('mongoose');
-
-// //Lokale connectie op server A.
-// const mongoURI = 'mongodb://localhost:27017,localhost:27018,localhost:27019/'+'db-master?replicaSet=rs0';
-
-// mongoose.connect(mongoURI, {
-//     "authSource": "admin",
-//     "user": process.env.USER,
-//     "pass": process.env.PASS,
-//     "useNewUrlParser": true, 
-//     "useUnifiedTopology": true })
-// .then(() => console.log('connected'))
-// .catch((err) => console.log(err));
-
-// const storage = new GridFsStorage({
-//   url: mongoURI,
-//   file: (req, file) => {
-//     return new Promise((resolve, reject) => {
-//       crypto.randomBytes(16, (err, buf) => {
-//         if (err) {
-//           return reject(err);
-//         }
-//         const filename = buf.toString("hex") + path.extname(file.originalname);
-//         const fileInfo = {
-//           filename: filename,
-//           bucketName: "uploads"
-//         };
-//         resolve(fileInfo);
-//       });
-//     });
-//   }
-// });
-
-// const upload = multer({
-//   storage
-// });
 
 var app = express();
 app.use(cors())
@@ -173,5 +130,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-// module.exports = app;
-module.exports = { app, sequelize, User};
+module.exports = app;

@@ -5,7 +5,31 @@ const bodyParser = require('body-parser');
 const User = require("../../../models/user");
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const controller = require('../../../controller/controller');
+require('../../../config/passport')(passport);
+
+
+/********************************************************************************/
+const { createUsersTable } = require('../../../models/user');
+
+var mysql = require('mysql2');
+const connection = mysql.createPool({
+  host: '62.72.50.23',
+  user: 'u619697559_midas_devuser',
+  password: 'Devuser123#',
+  database: 'u619697559_midas_hofsra'
+}).promise();
+
+// Call the function to create the users table when the server starts
+(async () => {
+  try {
+    await createUsersTable(connection);
+    console.log('Database tables initialized successfully');
+  } catch (err) {
+    console.error('Error initializing database:', err);
+    process.exit(1);
+  }
+})();
+/********************************************************************************/
 
 const {ensureAuthenticated} = require('../../../config/auth')
 
@@ -25,58 +49,54 @@ router.post('/login', (req,res,next)=>{
         successRedirect : '/api/v1/dashboard/index',
         failureRedirect: '/api/v1/',
         failureFlash : true
-    })(req,res,next)
+    })(req,res,next);
   })
   
-  router.post('/register', controller.register)
-  // router.post('/register', async (req, res) => {
-  //   const { name, email, password, password2, agreedToTos } = req.body;
-  //   let errors = [];
+// router.post('/register', register);
+router.post('/register', async (req,res,next)=>{
+    const { name, email, password, password2, agreedToTos } = req.body;
+    let errors = [];
   
-  //   // Validation checks
-  //   if (!name || !email || !password || !password2) {
-  //     errors.push({ msg: "Please fill in all fields...", param: "email" });
-  //   }
-  //   if (password !== password2) {
-  //     errors.push({ msg: "Passwords do not match...", param: "password2" });
-  //   }
-  //   if (password.length < 6) {
-  //     errors.push({ msg: 'Password must be at least 6 characters long...', param: "password" });
-  //   }
-  //   if (agreedToTos !== "on") {
-  //     errors.push({ msg: "You must agree to the terms and conditions...", param: "agreedToTos" });
-  //   }
-  
-  //   if (errors.length > 0) {
-  //     console.log(errors);
-  //     res.json({ errors });
-  //   } else {
-  //     try {
-  //       // Check if user with the same email exists
-  //       const existingUser = await User.findOne({ where: { email } });
-  //       if (existingUser) {
-  //         errors.push({ msg: 'Email is already registered...', param: "email" });
-  //         res.json({ errors });
-  //       } else {
-  //         // Create new user
-  //         const newUser = await User.create({
-  //           name,
-  //           email,
-  //           password,
-  //           agreedToTos,
-  //           accountAuthorizedByAdmin: false
-  //         });
-  
-  //         console.log(newUser);
-  //         res.json({ returnUrl: '/api/v1/dashboard/index' });
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //       res.status(500).json({ msg: 'Internal server error' });
-  //     }
-  //   }
-  // });
+    // Validation checks
+    if (!name || !email || !password || !password2) {
+      errors.push({ msg: "Please fill in all fields...", param: "email" });
+    }
+    if (password !== password2) {
+      errors.push({ msg: "Passwords do not match...", param: "password2" });
+    }
+    if (password.length < 6) {
+      errors.push({ msg: 'Password must be at least 6 characters long...', param: "password" });
+    }
+    if (agreedToTos !== "on") {
+      errors.push({ msg: "You must agree to the terms and conditions...", param: "agreedToTos" });
+    }
 
+    if (errors.length > 0) {
+      console.log(errors);
+      res.json({ errors });
+    } else {
+      try {
+        // Check exited user into database
+        const [rows] = await connection.query('SELECT * FROM users WHERE email = ?', [email]);
+          if (rows.length > 0) {
+            errors.push({ msg: 'Email is already registered...', param: "email" });
+            res.json({ errors });
+          } else {
+            const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+            // Insert new user into database
+            await connection.query(
+              'INSERT INTO users (name, email, password, agreedToTos) VALUES (?, ?, ?, ?)',
+              [name, email, hashedPassword, agreedToTos]
+            );
+            console.log('User registered successfully');
+            res.json({ returnUrl: '/api/v1/dashboard/index' });
+          }
+      } catch (error) {
+          console.error(error);
+          res.status(500).json({ msg: 'Internal server error' });
+      }
+    }
+  });
 
 router.get('/logout', ensureAuthenticated,(req,res)=>{
     req.logout();

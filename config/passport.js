@@ -1,42 +1,52 @@
-const User = require('../models/user');
+const mysql = require('mysql2/promise');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
-module.exports = function(passport){
-    passport.use(
-        new LocalStrategy({usernameField: 'email'},(email,password,done)=>{
-            //match user
-            User.findOne({email:email})
-            .then((user)=>{
-                if(!user){
-                    console.log("Gebruiker niet gevonden");
-                    return done(null,false,{message:'Dit eemail-adres is bij ons niet bekend'});
+// Create a MySQL pool connection
+const connection = mysql.createPool({
+    host: '62.72.50.23',
+    user: 'u619697559_midas_devuser',
+    password: 'Devuser123#',
+    database: 'u619697559_midas_hofsra'
+});
 
-                } else if(user && user.accountAuthorizedByAdmin == false){
-                    console.log("Gebruiker gevonden maar niet bevoegd");
-                    return done(null,false,{message:'Niet bevoegd'});
-                } 
-            
-                //math passwords
-                bcrypt.compare(password,user.password,(err,isMatch)=>{
-                    if(err) throw err;
-                    if(isMatch){
-                        return done(null,user);
-                    } else{
-                        return done(null,false,{message: 'Wachtwoord match niet...'});
-                    }
-                })
-            })
+module.exports = function(passport) {
+    passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
+        try {
+            // Check if the user with the provided email exists in the database
+            const [rows] = await connection.query('SELECT * FROM users WHERE email = ?', [email]);
+            if (rows.length === 0) {
+                return done(null, false, { message: 'Email not registered' });
+            }
+            const user = rows[0];
 
-            .catch((err)=>{console.log(err)})
-        })
-    )
-    passport.serializeUser(function(user,done) {
-        done(null,user.id);
-    })
-    passport.deserializeUser(function(id,done){
-        User.findById(id,function(err,user){
-            done(err,user);
-        })
-    })
-}
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (isMatch) {
+                return done(null, user);
+            } else {
+                return done(null, false, { message: 'Incorrect password' });
+            }
+        } catch (error) {
+            return done(error);
+        }
+    }));
+
+    // Serialize user to store in session
+    passport.serializeUser((user, done) => {
+        done(null, user.id); // Store user id in session
+    });
+
+    // Deserialize user from session
+    passport.deserializeUser(async (id, done) => {
+        try {
+            const [rows] = await connection.query('SELECT * FROM users WHERE id = ?', [id]);
+            if (rows.length === 0) {
+                return done(null, false);
+            }
+            const user = rows[0];
+            return done(null, user);
+        } catch (error) {
+            return done(error);
+        }
+    });
+};
