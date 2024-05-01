@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-const {User} = require('../app');
+const { User } = require('../app');
 
 exports.create = (req, res) => {
     if (!req.body.title) {
