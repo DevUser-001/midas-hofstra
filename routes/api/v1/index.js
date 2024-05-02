@@ -42,7 +42,11 @@ router.get("/", (request, response, next) => {
 
 router.get("/register", (request, response, next) => {
     response.render("register" )
-})
+});
+
+router.get("/dashboard/index", (request, response, next) => {
+    response.render("index" )
+});
 
 router.post('/login', (req,res,next)=>{
     passport.authenticate('local',{
@@ -50,7 +54,7 @@ router.post('/login', (req,res,next)=>{
         failureRedirect: '/api/v1/',
         failureFlash : true
     })(req,res,next);
-  })
+  });
   
 // router.post('/register', register);
 router.post('/register', async (req,res,next)=>{
