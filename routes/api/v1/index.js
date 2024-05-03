@@ -48,6 +48,31 @@ router.get("/dashboard/index", (request, response, next) => {
     response.render("index" )
 });
 
+router.get("/dashboard/index.html", (request, response, next) => {
+  const filePath = path.join(__dirname, 'bin', 'index.html');
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+      if (err) {
+          console.error('Error reading file:', err);
+          res.status(500).send('Internal Server Error');
+      } else {
+        response.send(data);
+      }
+  });
+});
+
+// app.get('/about', (req, res) => {
+//   // Read and render the about.html file
+//   const filePath = path.join(__dirname, 'bin', 'index.html');
+//   fs.readFile(filePath, 'utf-8', (err, data) => {
+//       if (err) {
+//           console.error('Error reading file:', err);
+//           res.status(500).send('Internal Server Error');
+//       } else {
+//           res.send(data);
+//       }
+//   });
+// });
+
 router.post('/login', (req,res,next)=>{
     passport.authenticate('local',{
         successRedirect : '/api/v1/dashboard/index',
