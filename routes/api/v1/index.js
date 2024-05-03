@@ -6,18 +6,11 @@ const User = require("../../../models/user");
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 require('../../../config/passport')(passport);
+const connection = require('../../../config/mysql_connection');
 
 
 /********************************************************************************/
 const { createUsersTable } = require('../../../models/user');
-
-var mysql = require('mysql2');
-const connection = mysql.createPool({
-  host: '62.72.50.23',
-  user: 'u619697559_midas_devuser',
-  password: 'Devuser123#',
-  database: 'u619697559_midas_hofsra'
-}).promise();
 
 // Call the function to create the users table when the server starts
 (async () => {

@@ -1,14 +1,7 @@
 const mysql = require('mysql2/promise');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-
-// Create a MySQL pool connection
-const connection = mysql.createPool({
-    host: '62.72.50.23',
-    user: 'u619697559_midas_devuser',
-    password: 'Devuser123#',
-    database: 'u619697559_midas_hofsra'
-});
+const connection = require('../config/mysql_connection');
 
 module.exports = function(passport) {
     passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
