@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const User = require("../../../models/user");
@@ -7,7 +8,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 require('../../../config/passport')(passport);
 const connection = require('../../../config/mysql_connection');
-
+const dashboard = require("./dashboard");
 
 /********************************************************************************/
 const { createUsersTable } = require('../../../models/user');
@@ -28,10 +29,11 @@ const {ensureAuthenticated} = require('../../../config/auth')
 
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
+router.use("/dashboard", dashboard );
 
 router.get("/", (request, response, next) => {
     response.render("login" )
-})
+});
 
 router.get("/register", (request, response, next) => {
     response.render("register" )
@@ -41,10 +43,34 @@ router.get("/dashboard/index", (request, response, next) => {
     response.render("index" )
 });
 
+// Serve static files from the 'public' directory
+// router.use(express.static(path.join(__dirname, '../../../bin')));
+
+// Route to serve the dashboard HTML file
+// router.get('/dashboard/index.html', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../../../bin', 'index.html'));
+// });
+
 router.post('/login', (req,res,next)=>{
     passport.authenticate('local',{
         successRedirect : '/api/v1/dashboard/index',
         failureRedirect: '/api/v1/',
+        failureFlash : true
+    })(req,res,next);
+  });
+
+  router.get("/admin/login", (request, response, next) => {
+    response.render("auth-login" )
+  });
+
+  router.get("/admin/create", (request, response, next) => {
+    response.render("testing" )
+  });
+  
+  router.post('/admin/login', (req,res,next)=>{
+    passport.authenticate('local',{
+        successRedirect : '/api/v1/admin/create',
+        failureRedirect: '/api/v1/admin/login',
         failureFlash : true
     })(req,res,next);
   });
