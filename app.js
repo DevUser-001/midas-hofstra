@@ -16,8 +16,8 @@ require('./config/passport')(passport);
 var index = require("./routes/index");
 var mysql = require('mysql2');
 const { Sequelize, DataTypes } = require('sequelize');
-const PORT = 9999; 
-// const PORT = process.env.PORT || 9999;
+// const PORT = 9999; 
+const PORT = process.env.PORT || 9999;
 
 
 // const sequelize = new Sequelize('u619697559_midas_hofsra', 'u619697559_midas_devuser', 'Devuser123#', {
