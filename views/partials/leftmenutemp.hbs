@@ -4,22 +4,23 @@
 
                     <!-- User box -->
                     <div class="user-box text-center">
-
-                        <div class="dropdown"> 
+                        <img src="/images/users/profile_user.jpg" alt="user-img" title="Mat Helme"
+                            class="rounded-circle avatar-md">
+                        <div class="dropdown">
                             <a href="javascript: void(0);" class="text-dark font-weight-normal dropdown-toggle h5 mt-2 mb-1 d-block"
-                                data-toggle="dropdown">{{req.user}}</a>
+                                data-toggle="dropdown">Abc Xyz</a>
                             <div class="dropdown-menu user-pro-dropdown">
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="fe-user mr-1"></i>
-                                    <span>Mijn Account</span>
+                                    <span>My Account</span>
                                 </a>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="fe-settings mr-1"></i>
-                                    <span>Instellingen</span>
+                                    <span>Settings</span>
                                 </a>
 
                                 <!-- item-->
@@ -36,6 +37,7 @@
 
                             </div>
                         </div>
+                        <p class="text-muted">CEO</p>
                     </div>
 
                     <!--- Sidemenu -->
@@ -48,10 +50,10 @@
                             <li>
                                 <a href="#sidebarDashboards" data-toggle="collapse">
                                     <i data-feather="airplay"></i>
-                                    <span class="badge badge-success badge-pill float-right">4</span>
-                                    <span> Dashboards </span>
+                                    {{!-- <span class="badge badge-success badge-pill float-right">4</span> --}}
+                                    <span> Admin </span>
                                 </a>
-                                <div class="collapse" id="sidebarDashboards">
+                                {{!-- <div class="collapse" id="sidebarDashboards">
                                     <ul class="nav-second-level">
                                         <li>
                                             <a href="index.html">Dashboard 1</a>
@@ -66,25 +68,64 @@
                                             <a href="dashboard-4.html">Dashboard 4</a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> --}}
                             </li>
-
+                            
                             <li class="menu-title mt-2">Apps</li>
-<!--
-                            <li>
-                                <a href="/api/v1/dashboard/kalender">
+                            {{!-- <li>
+                                <a href="/api/v1/dashboard/calendar">
                                     <i data-feather="calendar"></i>
                                     <span> Kalender </span>
                                 </a>
-                            </li>
--->
+                            </li> --}}
                             <li>
                                 <a href="#sidebarEcommerce" data-toggle="collapse">
                                     <i data-feather="shopping-cart"></i>
-                                    <span> B2C </span>
+                                    <span> Ecommerce </span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <div class="collapse" id="sidebarEcommerce">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="ecommerce-dashboard">Dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="ecommerce-products">Products</a>
+                                        </li>
+                                        <li>
+                                            <a href="ecommerce-product-detail">Product Detail</a>
+                                        </li>
+                                        <li>
+                                            <a href="ecommerce-add-product">Add Product</a>
+                                        </li>
+                                        <li>
+                                            <a href="ecommerce-customers">Customers</a>
+                                        </li>
+                                        <li>
+                                            <a href="ecommerce-orders">Orders</a>
+                                        </li>
+                                        <li>
+                                            <a href="ecommerce-order-detail">Order Detail</a>
+                                        </li>
+                                        <li>
+                                            <a href="ecommerce-sellers">Sellers</a>
+                                        </li>
+                                        {{!-- <li>
+                                            <a href="ecommerce-cart">Shopping Cart</a>
+                                        </li>
+                                        <li>
+                                            <a href="ecommerce-checkout">Checkout</a>
+                                        </li> --}}
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#sidebarB2C" data-toggle="collapse">
+                                    <i data-feather="star"></i>
+                                    <span> B2C </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarB2C">
                                     <ul class="nav-second-level">
                                         <li>
                                             <a href="/api/v1/dashboard/b2c/index">Dashboard</a>
@@ -169,12 +210,29 @@
                             </li>
 
                             <li>
-                                <a href="apps-companies.html">
+                                <a href="/api/v1/dashboard/companies">
                                     <i data-feather="activity"></i>
                                     <span> Companies </span>
                                 </a>
                             </li>
 
+                            <li>
+                                <a href="#sidebarTickets" data-toggle="collapse">
+                                    <i data-feather="aperture"></i>
+                                    <span> Query Tickets </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarTickets">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="tickets-list">List</a>
+                                        </li>
+                                        <li>
+                                            <a href="tickets-detail">Detail</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
 
                     </div>

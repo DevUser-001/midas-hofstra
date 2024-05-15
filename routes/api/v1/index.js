@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 require('../../../config/passport')(passport);
 const connection = require('../../../config/mysql_connection');
-
+const dashboard = require("./dashboard");
 
 /********************************************************************************/
 const { createUsersTable } = require('../../../models/user');
@@ -28,6 +28,7 @@ const {ensureAuthenticated} = require('../../../config/auth')
 
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
+router.use("/dashboard", dashboard );
 
 router.get("/", (request, response, next) => {
     response.render("login" )
