@@ -43,13 +43,6 @@ router.get("/dashboard/index", (request, response, next) => {
     response.render("index" )
 });
 
-// Serve static files from the 'public' directory
-// router.use(express.static(path.join(__dirname, '../../../bin')));
-
-// Route to serve the dashboard HTML file
-// router.get('/dashboard/index.html', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../../../bin', 'index.html'));
-// });
 
 router.post('/login', (req,res,next)=>{
     passport.authenticate('local',{

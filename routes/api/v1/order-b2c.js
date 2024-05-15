@@ -6,9 +6,8 @@ const xlsx = require("xlsx");
 var router = express.Router();
 const converter = require('json-2-csv');
 
-const Order = require("../../../models/order-response");
-
 const typeproduct = ['EDT','EDP', 'EDC', 'Deostick', 'BL'];
+
 
 router.get("/", async (request, response, next) => {
 
