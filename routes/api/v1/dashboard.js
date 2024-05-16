@@ -6,7 +6,7 @@ const b2c = require("./b2c");
 const crm = require("./crm");
 
 router.get("/index", (request, response, next) => {
-    response.render("index" )
+    response.render("index")
 })
 
 router.use("/b2b", b2b );
@@ -47,7 +47,6 @@ router.get("/tickets-list", (request, response, next) => {
 router.get("/tickets-detail", (request, response, next) => {
     response.render("tickets-detail")
 });
-
 
 
 
